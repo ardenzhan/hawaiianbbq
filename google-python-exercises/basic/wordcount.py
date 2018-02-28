@@ -39,11 +39,32 @@ print_words() and print_top().
 
 import sys
 
-# +++your code here+++
-# Define print_words(filename) and print_top(filename) functions.
-# You could write a helper utility function that reads a file
-# and builds and returns a word/count dict for it.
-# Then print_words() and print_top() can just call the utility function.
+def word_count(filename):
+  word_count_dict = {}
+  file = open(filename, 'rU')
+  for line in file:
+    for word in line.lower().split():
+      if word not in word_count_dict:
+        word_count_dict[word] = 0
+      word_count_dict[word] += 1
+  file.close()
+  return word_count_dict
+
+
+def print_words(filename):
+  # prints 'word count' format, sorted by word
+  for word, count in sorted(word_count(filename).items()):
+    print word, count
+
+
+def print_top(filename):
+  # prints top 20 most common words sorted so most common word is first
+  items = sorted(word_count(filename).items(),
+    key=lambda tuple: tuple[1],
+    reverse=True)
+  for word, count in items[:20]:
+    print word, count
+
 
 ###
 
