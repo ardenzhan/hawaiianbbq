@@ -40,8 +40,24 @@ def extract_names(filename):
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  # +++your code here+++
-  return
+  f = open(filename, 'rU')
+  text = f.read()
+  f.close()
+
+  year = re.search(r'Popularity in (\d\d\d\d)', text).group(1)
+
+  namelist = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', text)
+
+  ranked_names = {}
+  for rank, boyname, girlname in namelist:
+    ranked_names[boyname] = rank
+    ranked_names[girlname] = rank
+
+  master_list = [year]
+  for name in sorted(ranked_names.keys()):
+    master_list.append('{} {}'.format(name, ranked_names[name]))
+
+  return master_list
 
 
 def main():
@@ -63,6 +79,19 @@ def main():
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
+  for file in args:
+    ranked_names = extract_names(file)
+    
+    text = '\n'.join(ranked_names)
+
+    if summary:
+      output_filename = file.replace('.html', '')
+      output_file = open(output_filename + '_summary.html', 'w')
+      output_file.write(text + '\n')
+      output_file.close()
+      print 'Created summary file:', output_filename + '_summary.html'
+    else:
+      print text
   
 if __name__ == '__main__':
   main()
