@@ -14,14 +14,14 @@ def twoSum(nums, target):
   :type target: int
   :rtype: List[int]
   """
-  for num in nums:
-    remaining_nums = nums[nums.index(num)+1:]
-    if (target - num) in remaining_nums:
-      return [nums.index(num), nums.index(num)+1+remaining_nums.index(target-num)]
+  hash_map = {}
+  for i in range(len(nums)):
+    complement = target - nums[i]
 
-print twoSum([2,7,11,15], 9)
-print twoSum([3,2,4], 6)
-print twoSum([3,3], 6)
+    if complement in hash_map:
+      return (hash_map[complement], i)
+    
+    hash_map[nums[i]] = i
 
 # Solutions
 # https://leetcode.com/articles/two-sum/
