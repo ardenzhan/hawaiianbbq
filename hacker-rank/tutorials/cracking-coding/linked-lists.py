@@ -5,14 +5,6 @@ class Node:
     self.data = data
     self.next = next_node
 
-  def append(self, data):
-    current = self
-
-    while current.next is not None:
-      current = current.next
-
-    current.next = Node(data)
-
 class LinkedList:
   def __init__(self):
     self.head = None
@@ -22,9 +14,7 @@ class LinkedList:
       self.head = Node(data)
       return
 
-    # go to end of list where next is None, then append new Node
     current = self.head
-
     while current.next is not None:
       current = current.next
     current.next = Node(data)
