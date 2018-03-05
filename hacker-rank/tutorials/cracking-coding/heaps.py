@@ -31,7 +31,7 @@ class MinHeap:
 
     if self.size is 0: return None
     item = self.items[0]
-    self.items[0] = self.items[self.size - 1]
+    self.items[0] = self.items.pop()
     self.size -= 1
     self.heapifyDown()
     return item
